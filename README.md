@@ -50,6 +50,7 @@ Install Dependencies:
 pip install -r requirements.txt
 ```
 Start the MongoDB Database:
+
 We have to ensure that MongoDB is running locally or via Docker:
 ```
 docker run -d -p 27017:27017 --name mongodb mongo
@@ -59,5 +60,5 @@ Run the FastAPI Application:
 uvicorn main:app --reload
 ```
 Access API Documentation:
-Once the app is running, click on the link to the browser from the terminal and add "/docs" to the end of the URL like this:
-"http://127.0.0.1:8000/docs" and press ENTER
+
+Once the app is running, click on the link to the browser from the terminal and add "/docs" to the end of the URL like this: "http://127.0.0.1:8000/docs" and press ENTER
