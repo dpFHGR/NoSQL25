@@ -3,8 +3,9 @@ There are 5 files uploaded in this repository: 4 Python files (main.py, routes.p
 Setup & Installation (on Pycharm/VS code Terminal)
 ```
 git clone https://github.com/dpFHGR/NoSQL25
-cd NoSQL-Project
 ```
+cd NoSQL-Project
+
 Create a Virtual Environment (on Pycharm/VS code Terminal)
 python -m venv venv
 source venv/bin/activate # On macOS/Linux
