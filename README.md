@@ -19,7 +19,7 @@ https://www.mongodb.com/lp/cloud/atlas/try4-reg?utm_source=google&utm_campaign=s
 There are 5 files uploaded in this repository: 4 Python files (main.py, routes.py, models.py, db.py) and 1 environment file (.env)
 - Open main.py, db.py, models.py, routes.py and .env in Pycharm or Visual Studio code.
 - Please update the .env file using your username and password.
-- Open the terminal of your chosen IDE and you are ready to go with the setup and installation.
+- Open the terminal in your chosen IDE and you are ready to begin the setup and installation.
 
 1. Clone the github link using the following command:
 ```
