@@ -15,7 +15,7 @@ https://www.mongodb.com/lp/cloud/atlas/try4-reg?utm_source=google&utm_campaign=s
 6. After creating, you can now set a username and password and click "Create User".
 7. Finally, click on the "Finish and Close" button shown at the bottom of the page, a pop up message will appear, click on "Go to Databases", check for the cluster name you've given earlier and click on "Connect" located next to the cluster name to connect to your cluster.
 
-There are 5 files uploaded in this repository: 4 Python files (main.py, routes.py, models.py, db.py), 1 environment file (.env)
+### There are 5 files uploaded in this repository: 4 Python files (main.py, routes.py, models.py, db.py) and 1 environment file (.env)
 
 ## Updating .env file
 Please update the .env file using your username and password
