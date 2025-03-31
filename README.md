@@ -36,11 +36,12 @@ Create a Virtual Environment:
 python -m venv venv
 ```
 Navigate to the venv file:
+
 On MacOS/Linux:
 ```
 source venv/bin/activate
 ```
-On Windows:
+Or on Windows:
 ```
 venv\Scripts\activate # On Windows
 ```
