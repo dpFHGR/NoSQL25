@@ -20,7 +20,7 @@ https://www.mongodb.com/lp/cloud/atlas/try4-reg?utm_source=google&utm_campaign=s
 ## Updating .env file
 Please update the .env file using your username and password
 
-##  Further Setup & Installation (on Pycharm/ VS code Terminal)
+##  Further Setup & Installation (on Pycharm/ Visual Studio code Terminal)
 Clone the github link using the following command:
 ```
 git clone https://github.com/dpFHGR/NoSQL25
@@ -35,11 +35,11 @@ python -m venv venv
 ```
 Navigate to the venv file:
 
-On MacOS/Linux:
+##### On MacOS/Linux:
 ```
 source venv/bin/activate
 ```
-Or on Windows:
+##### Or on Windows:
 ```
 venv\Scripts\activate # On Windows
 ```
