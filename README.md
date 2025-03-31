@@ -22,17 +22,24 @@ There are 5 files uploaded in this repository: 4 Python files (main.py, routes.p
 
 atlas -> cluster -> note password -> connect -> .env -> text.md -> replace password with yours
 
-Setup & Installation (on Pycharm/VS code Terminal)
+##  Further Setup & Installation (on Pycharm/ VS code Terminal)
+Clone the github link using the following command:
 ```
 git clone https://github.com/dpFHGR/NoSQL25
 ```
+Navigate to the folder NoSQL-Project:
+```
 cd NoSQL-Project
-
-Create a Virtual Environment (on Pycharm/VS code Terminal)
+```
+Create a Virtual Environment:
+```
 python -m venv venv
+```
+Navigate to the venv file:
+```
 source venv/bin/activate # On macOS/Linux
 venv\Scripts\activate # On Windows
-
+```
 Install Dependencies (on Pycharm/VS code Terminal)
 pip install -r requirements.txt
 
