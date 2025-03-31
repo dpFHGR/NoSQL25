@@ -33,13 +33,13 @@ cd NoSQL-Project
 ```
 python -m venv venv
 ```
-4. Navigate to the venv file:
+4. Activate the virtual environment you created:
 
-On MacOS/Linux:
+  On MacOS/Linux:
 ```
 source venv/bin/activate
 ```
-Or on Windows:
+  Or on Windows:
 ```
 venv\Scripts\activate # On Windows
 ```
