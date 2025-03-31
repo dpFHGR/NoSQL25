@@ -6,21 +6,19 @@ Before you get started, please sign up for MongoDB Atlas as a free user under th
 ```
 https://www.mongodb.com/lp/cloud/atlas/try4-reg?utm_source=google&utm_campaign=search_gs_pl_evergreen_atlas_core-high-int_prosp-brand_gic-null_ww-tier4_ps-all_desktop_eng_lead&utm_term=mongodb%20atlas&utm_medium=cpc_paid_search&utm_ad=e&utm_ad_campaign_id=22031347578&adgroup=173739098633&cq_cmp=22031347578&gad_source=1&gclid=EAIaIQobChMIv526kIy1jAMV8Z2DBx3UPTkXEAAYASAAEgI95vD_BwE
 ```
-## MongoDB Atlas
-1. Create Database
-2. Choose free plan
-3. Choose any provider -> The code was test using AWS
-4. Select the closest region
-5. Provide a name for your cluster
-6. After creating, you can now set a username and password
-7. Finish and connect to your cluster
+## MongoDB Atlas Setup
+1. On the left side of the page, under "DEPLOYMENT" click on Database and then click on "Build a Database" button popped up on the middle of the page.
+2. Three different configuration options are shown, so we are going to choose the free plan i.e. M0: FREE.
+3. Three providers are shown, choose any provider of your choice-> The code was tested using "aws"
+4. Select the closest region.
+5. Provide a name for your cluster and click "Create" shown on the botton of the screen.
+6. After creating, you can now set a username and password and click on "Create User".
+7. Finally, click on the button "Finish and Close" shown below the page, a pop up message pops up, click on "Go to Databases", check for the cluster name you've given earlier and click on "Connect" situated next to the cluster name to connect to your cluster.
 
 ## Updating .env file
 Please update the .env file using your username and password
 
 There are 5 files uploaded in this repository: 4 Python files (main.py, routes.py, models.py, db.py), 1 environment file (.env)
-
-atlas -> cluster -> note password -> connect -> .env -> text.md -> replace password with yours
 
 ##  Further Setup & Installation (on Pycharm/ VS code Terminal)
 Clone the github link using the following command:
