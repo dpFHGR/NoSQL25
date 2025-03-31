@@ -27,7 +27,7 @@ Clone the github link using the following command:
 ```
 git clone https://github.com/dpFHGR/NoSQL25
 ```
-Navigate to the folder NoSQL-Project:
+Navigate to the NoSQL-Project folder:
 ```
 cd NoSQL-Project
 ```
@@ -36,20 +36,27 @@ Create a Virtual Environment:
 python -m venv venv
 ```
 Navigate to the venv file:
+On MacOS/Linux:
 ```
-source venv/bin/activate # On macOS/Linux
+source venv/bin/activate
+```
+On Windows:
+```
 venv\Scripts\activate # On Windows
 ```
-Install Dependencies (on Pycharm/VS code Terminal)
+Install Dependencies:
+```
 pip install -r requirements.txt
-
-Start the MongoDB Database (on Pycharm/VS code Terminal)
+```
+Start the MongoDB Database:
 We have to ensure that MongoDB is running locally or via Docker:
+```
 docker run -d -p 27017:27017 --name mongodb mongo
-
-Run the FastAPI Application (on Pycharm/VS code Terminal)
+```
+Run the FastAPI Application:
+```
 uvicorn main:app --reload
-
-Access API Documentation
+```
+Access API Documentation:
 Once the app is running, click on the link to the browser from the terminal and add "/docs" to the end of the URL like this:
-http://127.0.0.1:8000/docs and press ENTER
+"http://127.0.0.1:8000/docs" and press ENTER
