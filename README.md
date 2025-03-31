@@ -1,5 +1,7 @@
 There are 5 files uploaded in this repository: 4 Python files (main.py, routes.py, models.py, db.py), 1 environment file (.env)
 
+atlas -> cluster -> note password -> connect -> .env -> text.md -> replace password with yours
+
 Setup & Installation (on Pycharm/VS code Terminal)
 ```
 git clone https://github.com/dpFHGR/NoSQL25
