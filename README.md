@@ -27,7 +27,7 @@ git clone https://github.com/dpFHGR/NoSQL25
 ```
 2. Navigate to the NoSQL-Project folder:
 ```
-cd NoSQL-Project
+cd NoSQL25
 ```
 3. Create a Virtual Environment:
 ```
@@ -41,7 +41,7 @@ source venv/bin/activate
 ```
   Or on Windows:
 ```
-venv\Scripts\activate # On Windows
+venv\Scripts\activate
 ```
 5. Install Dependencies:
 ```
