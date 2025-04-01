@@ -48,7 +48,9 @@ venv\Scripts\activate
 pip install -r requirements.txt
 ```
 6. Start the MongoDB Database:
+   
 First, make sure you've got Docker installed on your system.
+
 Then check whether MongoDB is running locally or via Docker:
 ```
 docker run -d -p 27017:27017 --name mongodb mongo
