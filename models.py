@@ -13,8 +13,8 @@ class MonitoringTemplate(BaseModel):
     monitoring_tools: List[str]
 
     class Config:
-        allow_population_by_field_name = True
-        schema_extra = {
+        validate_by_name = True
+        json_schema_extra = {
             "example": {
                 "_id": "123e4567-e89b-12d3-a456-426614174000",
                 "temp_name": "CPU Load",
@@ -53,13 +53,27 @@ class MonitoringTemplate(BaseModel):
         }'''
 
 class MonitoringTemplateUpdate(BaseModel):
-    temp_name: str
-    description: str
-    limit: float
-    unit: str
-    time_window: str
-    alerting_method: str
-    monitoring_tools: List[str]
+    temp_name: Optional[str]
+    description: Optional[str]
+    limit: Optional[float]
+    unit: Optional[str]
+    time_window: Optional[str]
+    alerting_method: Optional[str]
+    monitoring_tools: Optional[List[str]]
+
+    class Config:
+        validate_by_name = True
+        json_schema_extra = {
+            "example": {
+                "temp_name": "CPU Load",
+                "description": "Monitors CPU usage over a given time period.",
+                "limit": 85.0,
+                "unit": "%",
+                "time_window": "5min",
+                "alerting_method": "Email Alert",
+                "monitoring_tools": ["789e1234-a567-bcde-1234-56789abcdef0"]
+            }
+        }
 
 '''class MonitoringToolUpdate(BaseModel):
     name: str
