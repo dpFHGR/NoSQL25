@@ -27,7 +27,7 @@ class MonitoringTemplate(BaseModel):
             }
         }
 
-'''class MonitoringTool(BaseModel):
+class MonitoringTool(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()), alias="_id")
     name: str
     version: str
@@ -38,8 +38,8 @@ class MonitoringTemplate(BaseModel):
     monitoring_templates: List[str]
 
     class Config:
-        allow_population_by_field_name = True
-        schema_extra = {
+        validate_by_name = True
+        json_schema_extra = {
             "example": {
                 "_id": "789e1234-a567-bcde-1234-56789abcdef0",
                 "name": "Zabbix",
@@ -50,36 +50,22 @@ class MonitoringTemplate(BaseModel):
                 "serv_name": "Monitoring-Server-1",
                 "monitoring_templates": ["123e4567-e89b-12d3-a456-426614174000"]
             }
-        }'''
-
-class MonitoringTemplateUpdate(BaseModel):
-    temp_name: Optional[str]
-    description: Optional[str]
-    limit: Optional[float]
-    unit: Optional[str]
-    time_window: Optional[str]
-    alerting_method: Optional[str]
-    monitoring_tools: Optional[List[str]]
-
-    class Config:
-        validate_by_name = True
-        json_schema_extra = {
-            "example": {
-                "temp_name": "CPU Load",
-                "description": "Monitors CPU usage over a given time period.",
-                "limit": 85.0,
-                "unit": "%",
-                "time_window": "5min",
-                "alerting_method": "Email Alert",
-                "monitoring_tools": ["789e1234-a567-bcde-1234-56789abcdef0"]
-            }
         }
 
-'''class MonitoringToolUpdate(BaseModel):
+class MonitoringTemplateUpdate(BaseModel):
+    temp_name: str
+    description: str
+    limit: float
+    unit: str
+    time_window: str
+    alerting_method: str
+    monitoring_tools: List[str]
+
+class MonitoringToolUpdate(BaseModel):
     name: str
     version: str
     platform: str
     manufacturer: str
     sys_owner: str
     serv_name: str
-    monitoring_templates: List[str]'''
+    monitoring_templates: List[str]

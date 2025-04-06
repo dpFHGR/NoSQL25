@@ -47,9 +47,10 @@ def delete_monitoring_template(id: str, request: Request, response: Response):
 
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Monitoring template with ID {id} not found")
 
+'''
 # MonitoringTool Routes
 
-'''@tool_router.post("/", response_description="Create a new monitoring tool", status_code=status.HTTP_201_CREATED, response_model=MonitoringTool)
+@tool_router.post("/", response_description="Create a new monitoring tool", status_code=status.HTTP_201_CREATED, response_model=MonitoringTool)
 def create_monitoring_tool(request: Request, tool: MonitoringTool = Body(...)):
     tool = jsonable_encoder(tool)
     new_tool = request.app.database["monitoring_tools"].insert_one(tool)

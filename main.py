@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from dotenv import dotenv_values
 from pymongo import MongoClient
 from routes import template_router # tool_router
+import os
 
 config = dotenv_values(".env")
 
