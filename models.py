@@ -53,19 +53,19 @@ class MonitoringTool(BaseModel):
         }
 
 class MonitoringTemplateUpdate(BaseModel):
-    temp_name: Optional[str]
-    description: Optional[str]
-    limit: Optional[float]
-    unit: Optional[str]
-    time_window: Optional[str]
-    alerting_method: Optional[str]
-    monitoring_tools: Optional[List[str]]
+    temp_name: str
+    description: str
+    limit: float
+    unit: str
+    time_window: str
+    alerting_method: str
+    monitoring_tools: List[str]
 
 class MonitoringToolUpdate(BaseModel):
-    name: Optional[str]
-    version: Optional[str]
-    platform: Optional[str]
-    manufacturer: Optional[str]
-    sys_owner: Optional[str]
-    serv_name: Optional[str]
-    monitoring_templates: Optional[List[str]]
+    name: str
+    version: str
+    platform: str
+    manufacturer: str
+    sys_owner: str
+    serv_name: str
+    monitoring_templates: List[str]
