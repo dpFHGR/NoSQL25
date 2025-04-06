@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Body, Request, Response, HTTPException, status
 from fastapi.encoders import jsonable_encoder
 from typing import List
-from models import MonitoringTemplate, MonitoringTemplateUpdate, MonitoringTool, MonitoringToolUpdate
+from models import (MonitoringTemplate, MonitoringTemplateUpdate) #MonitoringTool, MonitoringToolUpdate
 
 template_router = APIRouter()
-tool_router = APIRouter()
+# tool_router = APIRouter()
 
 # MonitoringTemplate Routes
 @template_router.post("/", response_description="Create a new monitoring template", status_code=status.HTTP_201_CREATED, response_model=MonitoringTemplate)
@@ -49,7 +49,7 @@ def delete_monitoring_template(id: str, request: Request, response: Response):
 
 # MonitoringTool Routes
 
-@tool_router.post("/", response_description="Create a new monitoring tool", status_code=status.HTTP_201_CREATED, response_model=MonitoringTool)
+'''@tool_router.post("/", response_description="Create a new monitoring tool", status_code=status.HTTP_201_CREATED, response_model=MonitoringTool)
 def create_monitoring_tool(request: Request, tool: MonitoringTool = Body(...)):
     tool = jsonable_encoder(tool)
     new_tool = request.app.database["monitoring_tools"].insert_one(tool)
@@ -87,4 +87,4 @@ def delete_monitoring_tool(id: str, request: Request, response: Response):
         response.status_code = status.HTTP_204_NO_CONTENT
         return response
 
-    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Monitoring tool with ID {id} not found")
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Monitoring tool with ID {id} not found")'''

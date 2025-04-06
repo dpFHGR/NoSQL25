@@ -27,7 +27,7 @@ class MonitoringTemplate(BaseModel):
             }
         }
 
-class MonitoringTool(BaseModel):
+'''class MonitoringTool(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()), alias="_id")
     name: str
     version: str
@@ -50,7 +50,7 @@ class MonitoringTool(BaseModel):
                 "serv_name": "Monitoring-Server-1",
                 "monitoring_templates": ["123e4567-e89b-12d3-a456-426614174000"]
             }
-        }
+        }'''
 
 class MonitoringTemplateUpdate(BaseModel):
     temp_name: str
@@ -61,11 +61,11 @@ class MonitoringTemplateUpdate(BaseModel):
     alerting_method: str
     monitoring_tools: List[str]
 
-class MonitoringToolUpdate(BaseModel):
+'''class MonitoringToolUpdate(BaseModel):
     name: str
     version: str
     platform: str
     manufacturer: str
     sys_owner: str
     serv_name: str
-    monitoring_templates: List[str]
+    monitoring_templates: List[str]'''
