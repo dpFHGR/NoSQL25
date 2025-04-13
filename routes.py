@@ -1,10 +1,11 @@
 from fastapi import APIRouter, Body, Request, Response, HTTPException, status
 from fastapi.encoders import jsonable_encoder
 from typing import List
-from models import (MonitoringTemplate, MonitoringTemplateUpdate) #MonitoringTool, MonitoringToolUpdate
+from models import (MonitoringTemplate, MonitoringTemplateUpdate, MonitoringTool, MonitoringToolUpdate, User, UserUpdate)
 
 template_router = APIRouter()
-# tool_router = APIRouter()
+tool_router = APIRouter()
+user_router = APIRouter()
 
 # MonitoringTemplate Routes
 @template_router.post("/", response_description="Create a new monitoring template", status_code=status.HTTP_201_CREATED, response_model=MonitoringTemplate)
@@ -47,9 +48,8 @@ def delete_monitoring_template(id: str, request: Request, response: Response):
 
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Monitoring template with ID {id} not found")
 
-'''
-# MonitoringTool Routes
 
+# MonitoringTool Routes
 @tool_router.post("/", response_description="Create a new monitoring tool", status_code=status.HTTP_201_CREATED, response_model=MonitoringTool)
 def create_monitoring_tool(request: Request, tool: MonitoringTool = Body(...)):
     tool = jsonable_encoder(tool)
@@ -88,4 +88,46 @@ def delete_monitoring_tool(id: str, request: Request, response: Response):
         response.status_code = status.HTTP_204_NO_CONTENT
         return response
 
-    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Monitoring tool with ID {id} not found")'''
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Monitoring tool with ID {id} not found")
+
+
+# User Routes
+@user_router.post("/", response_description="Create a new user", status_code=status.HTTP_201_CREATED, response_model=User)
+def create_user(request: Request, user: User = Body(...)):
+    user = jsonable_encoder(user)
+    new_user = request.app.database["users"].insert_one(user)
+    created_user = request.app.database["users"].find_one({"_id": new_user.inserted_id})
+    return created_user
+
+@user_router.get("/", response_description="List all users", response_model=List[User])
+def list_users(request: Request):
+    user = list(request.app.database["users"].find(limit=100))
+    return user
+
+@user_router.get("/{id}", response_description="Get a single user", response_model=User)
+def find_user(id: str, request: Request):
+    if (user := request.app.database["users"].find_one({"_id": id})) is not None:
+        return user
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"User {id} not found")
+
+@user_router.put("/{id}", response_description="Update a user", response_model=User)
+def update_user(id: str, request: Request, user: UserUpdate = Body(...)):
+    user_data = {k: v for k, v in user.dict().items() if v is not None}
+    if len(user_data) >= 1:
+        update_result = request.app.database["users"].update_one({"_id": id}, {"$set": user_data})
+        if update_result.modified_count == 0:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"User with ID{id} not found")
+
+    if (existing_user := request.app.database["users"].find_one({"_id": id})) is not None:
+        return existing_user
+
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"User with ID{id} not found")
+
+@user_router.delete("/{id}", response_description="Delete a user")
+def delete_user(id: str, request: Request, response: Response):
+    delete_result = request.app.database["users"].delete_one({"_id": id})
+    if delete_result.deleted_count == 1:
+        response.status_code = status.HTTP_204_NO_CONTENT
+        return response
+
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"User with ID{id} not found")
