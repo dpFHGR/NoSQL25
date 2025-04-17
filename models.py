@@ -91,7 +91,7 @@ class ServerRelationship(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()), alias="_id")
     server_id: str
     template_id: str
-    tool_id: str
+    tool: str
     applied_on: datetime
 
     class Config:
@@ -100,7 +100,7 @@ class ServerRelationship(BaseModel):
             "example": {
                 "server_id": "id-123",
                 "template_id": "id-456",
-                "tool_id": "id-789",
+                "tool": "id-789",
                 "applied_on": "2021-04-16 10:00:00"
             }
         }
@@ -138,5 +138,5 @@ class ServerUpdate(BaseModel):
 class ServerRelationshipUpdate(BaseModel):
     server_id: str
     template_id: str
-    tool_id: str
+    tool: str
     applied_on: datetime
