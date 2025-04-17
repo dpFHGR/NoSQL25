@@ -100,7 +100,7 @@ class ServerRelationship(BaseModel):
             "example": {
                 "server_id": "id-123",
                 "template_id": "id-456",
-                "rool_id": "id-789",
+                "tool_id": "id-789",
                 "applied_on": "2021-04-16 10:00:00"
             }
         }
