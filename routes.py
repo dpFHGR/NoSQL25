@@ -142,6 +142,11 @@ def create_server(request: Request, server: Server = Body(...)):
     new_server = request.app.database["servers"].insert_one(server)
     return request.app.database["servers"].find_one({"_id": new_server.inserted_id})
 
+@server_router.get("/", response_description="List all servers", response_model=List[Server])
+def list_servers(request: Request):
+    server = list(request.app.database["servers"].find(limit=100))
+    return server
+
 @server_router.get("/{id}", response_description="Get a single server or list all", response_model=Server)
 def find_server(id: str, request: Request):
     return list(request.app.database["servers"].find({"_id": id}, limit=100))
