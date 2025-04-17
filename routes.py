@@ -151,12 +151,20 @@ def list_servers(request: Request):
 def find_server(id: str, request: Request):
     return list(request.app.database["servers"].find({"_id": id}, limit=100))
 
+# Server Relationship Routes
 @ServerRelationship_router.post("/", response_description="Link template to server", response_model=ServerRelationship)
-def link_template_to_server(id: str, request: Request, link: ServerRelationship = Body(...)):
+def link_template_to_server(request: Request, link: ServerRelationship = Body(...)):
     link = jsonable_encoder(link)
-    new_link = request.app.database["links"].find_one({"_id": id}, link)
-    return request.app.database["links"].find_one({"_id": new_link["_id"]})
+    new_link = request.app.database["links"].insert_one(link)
+    created_link = request.app.database["links"].find_one({"_id": new_link.inserted_id})
+    return created_link
 
 @ServerRelationship_router.get("/", response_description="Get all links", response_model=List[ServerRelationship])
 def list_links(request: Request):
-    return list(request.app.database["links"].find(limit=100))
+    link = list(request.app.database["links"].find(limit=100))
+    return link
+
+@ServerRelationship_router.get("/server/{server_id}", response_description="Get templates linked to a server", response_model=List[ServerRelationship])
+def get_links_by_server_id(server_id: str, request: Request):
+    return list(request.app.database["links"].find({"server_id": server_id}))
+
