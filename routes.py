@@ -28,6 +28,16 @@ def find_monitoring_template(id: str, request: Request):
         return template
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Monitoring template with ID {id} not found")
 
+# Search function
+@template_router.get("/search", response_description="Search templates", response_model=List[MonitoringTemplate])
+def search_templates(request: Request, limit: float = None, unit: str = None):
+    query = {}
+    if limit is not None:
+        query["limit"] = {limit}
+        if unit:
+            query["unit"] = unit
+        return list(request.app.database["monitoring_templates"].find(query))
+
 @template_router.put("/{id}", response_description="Update a monitoring template", response_model=MonitoringTemplate)
 def update_template(id: str, request: Request, template: MonitoringTemplateUpdate = Body(...)):
     template_data = {k: v for k, v in template.dict().items() if v is not None}
