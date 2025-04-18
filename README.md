@@ -17,6 +17,7 @@ There are 6 files uploaded in this repository: 3 Python files (main.py, routes.p
 Along with the main branch, 2 side branches were used for development(feat_entities, search_function).
 
 Data Dumping:
+Finally, a data dump was performed to backup and restore the MongoDB database in a Docker container. The following was done:
 1. "docker exec -it mongodb mongodump --db monitoring_db --out /data/db/dump": This creates the Dump on the container which we cannot see.
 2. "mkdir .\mongo_dump": With this, we create a new Folder in the NoSQL25 Folder.
 3. "docker cp mongodb:/data/db/dump .\mongo_dump": With this, we copy the Dump locally.
