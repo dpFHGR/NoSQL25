@@ -17,9 +17,9 @@ There are 6 files uploaded in this repository: 3 Python files (main.py, routes.p
 Along with the main branch, 2 side branches were used for development(feat_entities, search_function).
 
 Data Dumping:
-1. With "docker exec -it mongodb mongodump --db monitoring_db --out /data/db/dump", we can create the dump on the container which we cannot see.
-2. With "mkdir .\mongo_dump", a new Folder in the NoSQL25 Folder is created.
-3. With "docker cp mongodb:/data/db/dump .\mongo_dump", we copy the Dump locally.
+1. "docker exec -it mongodb mongodump --db monitoring_db --out /data/db/dump": This creates the Dump on the container which we cannot see.
+2. "mkdir .\mongo_dump": With this, we create a new Folder in the NoSQL25 Folder.
+3. "docker cp mongodb:/data/db/dump .\mongo_dump": With this, we copy the Dump locally.
 
 ## Setup
 Before you get started, please download Docker Desktop on your system:
