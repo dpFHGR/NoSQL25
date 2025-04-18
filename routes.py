@@ -1,8 +1,10 @@
+# Importing necessary libraries
 from fastapi import APIRouter, Body, Request, Response, HTTPException, status
 from fastapi.encoders import jsonable_encoder
 from typing import List
 from models import (MonitoringTemplate, MonitoringTemplateUpdate, MonitoringTool, MonitoringToolUpdate, User, UserUpdate, Server, ServerUpdate, ServerRelationship, ServerRelationshipUpdate)
 
+# Defining individual API routers for different resource groups
 template_router = APIRouter()
 tool_router = APIRouter()
 user_router = APIRouter()
@@ -10,6 +12,8 @@ server_router = APIRouter()
 ServerRelationship_router = APIRouter()
 
 # MonitoringTemplate Routes
+
+# Creating and storing a new monitoring template in the database using POST
 @template_router.post("/", response_description="Create a new monitoring template", status_code=status.HTTP_201_CREATED, response_model=MonitoringTemplate)
 def create_monitoring_template(request: Request, template: MonitoringTemplate = Body(...)):
     template = jsonable_encoder(template)
@@ -17,17 +21,20 @@ def create_monitoring_template(request: Request, template: MonitoringTemplate = 
     created_template = request.app.database["monitoring_templates"].find_one({"_id": new_template.inserted_id})
     return created_template
 
+# Retrieving a list of all monitoring templates using GET
 @template_router.get("/", response_description="List all monitoring templates", response_model=List[MonitoringTemplate])
 def list_monitoring_templates(request: Request):
     templates = list(request.app.database["monitoring_templates"].find(limit=100))
     return templates
 
+# Retrieving a single monitoring template by its ID, or return 404 if not found using GET
 @template_router.get("/{id}", response_description="Get a single monitoring template by id", response_model=MonitoringTemplate)
 def find_monitoring_template(id: str, request: Request):
     if (template := request.app.database["monitoring_templates"].find_one({"_id": id})) is not None:
         return template
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Monitoring template with ID {id} not found")
 
+# Updating an existing monitoring template by ID using PUT; would return 404 if not found
 @template_router.put("/{id}", response_description="Update a monitoring template", response_model=MonitoringTemplate)
 def update_template(id: str, request: Request, template: MonitoringTemplateUpdate = Body(...)):
     template_data = {k: v for k, v in template.dict().items() if v is not None}
@@ -41,6 +48,7 @@ def update_template(id: str, request: Request, template: MonitoringTemplateUpdat
 
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Monitoring template with ID {id} not found")
 
+# Deleting a monitoring template by ID using DELETE, would return 404 if not found
 @template_router.delete("/{id}", response_description="Delete a monitoring template")
 def delete_monitoring_template(id: str, request: Request, response: Response):
     delete_result = request.app.database["monitoring_templates"].delete_one({"_id": id})
@@ -52,6 +60,8 @@ def delete_monitoring_template(id: str, request: Request, response: Response):
 
 
 # MonitoringTool Routes
+
+# Creating and storing a new monitoring tool in the database using POST
 @tool_router.post("/", response_description="Create a new monitoring tool", status_code=status.HTTP_201_CREATED, response_model=MonitoringTool)
 def create_monitoring_tool(request: Request, tool: MonitoringTool = Body(...)):
     tool = jsonable_encoder(tool)
@@ -59,17 +69,20 @@ def create_monitoring_tool(request: Request, tool: MonitoringTool = Body(...)):
     created_tool = request.app.database["monitoring_tools"].find_one({"_id": new_tool.inserted_id})
     return created_tool
 
+# Retrieving a list of all monitoring tools using GET
 @tool_router.get("/", response_description="List all monitoring tools", response_model=List[MonitoringTool])
 def list_monitoring_tools(request: Request):
     tools = list(request.app.database["monitoring_tools"].find(limit=100))
     return tools
 
+# Retrieving a single monitoring tool by its ID, or return 404 if not found using GET
 @tool_router.get("/{id}", response_description="Get a single monitoring tool by id", response_model=MonitoringTool)
 def find_monitoring_tool(id: str, request: Request):
     if (tool := request.app.database["monitoring_tools"].find_one({"_id": id})) is not None:
         return tool
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Monitoring tool with ID {id} not found")
 
+# Updating an existing monitoring tool by ID using PUT; would return 404 if not found
 @tool_router.put("/{id}", response_description="Update a monitoring tool", response_model=MonitoringTool)
 def update_monitoring_tool(id: str, request: Request, tool: MonitoringToolUpdate = Body(...)):
     tool_data = {k: v for k, v in tool.dict().items() if v is not None}
@@ -83,6 +96,7 @@ def update_monitoring_tool(id: str, request: Request, tool: MonitoringToolUpdate
 
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Monitoring tool with ID {id} not found")
 
+# Deleting a monitoring tool by ID using DELETE, would return 404 if not found
 @tool_router.delete("/{id}", response_description="Delete a monitoring tool")
 def delete_monitoring_tool(id: str, request: Request, response: Response):
     delete_result = request.app.database["monitoring_tools"].delete_one({"_id": id})
@@ -94,6 +108,8 @@ def delete_monitoring_tool(id: str, request: Request, response: Response):
 
 
 # User Routes
+
+# Creating and storing a new user in the database using POST
 @user_router.post("/", response_description="Create a new user", status_code=status.HTTP_201_CREATED, response_model=User)
 def create_user(request: Request, user: User = Body(...)):
     user = jsonable_encoder(user)
@@ -101,17 +117,20 @@ def create_user(request: Request, user: User = Body(...)):
     created_user = request.app.database["users"].find_one({"_id": new_user.inserted_id})
     return created_user
 
+# Retrieving a list of all users using GET
 @user_router.get("/", response_description="List all users", response_model=List[User])
 def list_users(request: Request):
     user = list(request.app.database["users"].find(limit=100))
     return user
 
+# Retrieving a single user by its ID, or return 404 if not found using GET
 @user_router.get("/{id}", response_description="Get a single user", response_model=User)
 def find_user(id: str, request: Request):
     if (user := request.app.database["users"].find_one({"_id": id})) is not None:
         return user
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"User {id} not found")
 
+# Updating an existing user by ID using PUT; would return 404 if not found
 @user_router.put("/{id}", response_description="Update a user", response_model=User)
 def update_user(id: str, request: Request, user: UserUpdate = Body(...)):
     user_data = {k: v for k, v in user.dict().items() if v is not None}
@@ -125,6 +144,7 @@ def update_user(id: str, request: Request, user: UserUpdate = Body(...)):
 
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"User {id} not found")
 
+# Deleting a user by ID using DELETE, would return 404 if not found
 @user_router.delete("/{id}", response_description="Delete a user")
 def delete_user(id: str, request: Request, response: Response):
     delete_result = request.app.database["users"].delete_one({"_id": id})
@@ -136,22 +156,32 @@ def delete_user(id: str, request: Request, response: Response):
 
 
 # Server Routes
-@server_router.post("/", response_description="Create a new server", response_model=Server)
+
+# Creating and storing a new server in the database using POST
+@server_router.post("/", response_description="Create a new server", status_code=status.HTTP_201_CREATED, response_model=Server)
 def create_server(request: Request, server: Server = Body(...)):
     server = jsonable_encoder(server)
     new_server = request.app.database["servers"].insert_one(server)
-    return request.app.database["servers"].find_one({"_id": new_server.inserted_id})
+    created_server = request.app.database["servers"].find_one({"_id": new_server.inserted_id})
+    return created_server
 
-@server_router.get("/", response_description="List all servers", response_model=Server)
+# # Retrieving a list of all servers using GET
+@server_router.get("/", response_description="List all servers", response_model=List[Server])
 def list_servers(request: Request):
     server = list(request.app.database["servers"].find(limit=100))
     return server
 
+# Retrieving a single server by its ID, or return 404 if not found using GET
 @server_router.get("/{id}", response_description="Get a single server or list all", response_model=Server)
 def find_server(id: str, request: Request):
-    return list(request.app.database["servers"].find({"_id": id}, limit=100))
+    if (server := request.app.database["servers"].find_one({"_id": id})) is not None:
+        return server
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Server {id} not found")
+
 
 # Server Relationship Routes
+
+# Creating and storing a new server-template relationship by server_id, template_id and tool in the database using POST
 @ServerRelationship_router.post("/", response_description="Link template to server", response_model=ServerRelationship)
 def link_template_to_server(request: Request, link: ServerRelationship = Body(...)):
     link = jsonable_encoder(link)
@@ -159,11 +189,7 @@ def link_template_to_server(request: Request, link: ServerRelationship = Body(..
     created_link = request.app.database["links"].find_one({"_id": new_link.inserted_id})
     return created_link
 
-@ServerRelationship_router.get("/", response_description="Get all links", response_model=List[ServerRelationship])
-def list_links(request: Request):
-    link = list(request.app.database["links"].find(limit=100))
-    return link
-
+# Retrieving all monitoring template links associated with a specific server ID
 @ServerRelationship_router.get("/server/{server_id}", response_description="Get templates linked to a server", response_model=List[ServerRelationship])
 def get_links_by_server_id(server_id: str, request: Request):
     return list(request.app.database["links"].find({"server_id": server_id}))

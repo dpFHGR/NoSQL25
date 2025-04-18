@@ -1,6 +1,7 @@
 version: '3.8'
 
 services:
+  # MongoDB service
   mongodb:
     image: mongo:7
     container_name: mongodb
@@ -9,6 +10,7 @@ services:
     volumes:
       - mongodb_data:/data/db
 
+# FastAPI backend service
   web:
     build: .
     command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
@@ -23,5 +25,6 @@ services:
     depends_on:
       - mongodb
 
+# Named volume to persist MongoDB data
 volumes:
   mongodb_data:

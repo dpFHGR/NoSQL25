@@ -1,22 +1,22 @@
-# pull the official docker image
+# Pulling the official docker image
 FROM python:3.11.1-slim
 
-# set work directory
+# Setting work directory
 WORKDIR /app
 
-# set env variables
+# Setting env variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-# install dependencies
+# Installing dependencies
 COPY requirements.txt .
 RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
-# copy dependencies
+# Copying dependencies
 COPY . .
 
-# expose
+# Expose
 EXPOSE 8000
 
-# run
+# Run
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

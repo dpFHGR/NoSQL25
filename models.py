@@ -1,8 +1,10 @@
+# Importing necessary libraries
 import uuid
 from typing import List
 from pydantic import BaseModel, Field
 from datetime import datetime
 
+# Pydantic model representing a monitoring template document in the database
 class MonitoringTemplate(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()), alias="_id")
     temp_name: str
@@ -13,6 +15,7 @@ class MonitoringTemplate(BaseModel):
     alerting_method: str
     monitoring_tools: List[str]
 
+    # Configuration for the Pydantic model, including example data for documentation
     class Config:
         validate_by_name = True
         json_schema_extra = {
@@ -27,6 +30,7 @@ class MonitoringTemplate(BaseModel):
             }
         }
 
+# Pydantic model representing a monitoring tool document in the database
 class MonitoringTool(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()), alias="_id")
     name: str
@@ -37,6 +41,7 @@ class MonitoringTool(BaseModel):
     serv_name: str
     monitoring_templates: List[str]
 
+    # Configuration for the Pydantic model, including example data for documentation
     class Config:
         validate_by_name = True
         json_schema_extra = {
@@ -51,6 +56,7 @@ class MonitoringTool(BaseModel):
             }
         }
 
+# Pydantic model representing a user document in the database
 class User(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()), alias="_id")
     username: str
@@ -58,6 +64,7 @@ class User(BaseModel):
     role: str
     created_at: str
 
+    # Configuration for the Pydantic model, including example data for documentation
     class Config:
         validate_by_name = True
         json_schema_extra = {
@@ -69,6 +76,7 @@ class User(BaseModel):
             }
         }
 
+# Pydantic model representing a server document in the database
 class Server(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()), alias="_id")
     hostname: str
@@ -76,6 +84,7 @@ class Server(BaseModel):
     location: str
     owner_id: str
 
+    # Configuration for the Pydantic model, including example data for documentation
     class Config:
         validate_by_name = True
         json_schema_extra = {
@@ -87,6 +96,7 @@ class Server(BaseModel):
             }
         }
 
+# Pydantic model representing a ServerRelationship document in the database
 class ServerRelationship(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()), alias="_id")
     server_id: str
@@ -94,6 +104,7 @@ class ServerRelationship(BaseModel):
     tool: str
     applied_on: datetime
 
+    # Configuration for the Pydantic model, including example data for documentation
     class Config:
         validate_by_name = True
         json_schema_extra = {
@@ -105,6 +116,7 @@ class ServerRelationship(BaseModel):
             }
         }
 
+# Pydantic model used for updating an existing monitoring template
 class MonitoringTemplateUpdate(BaseModel):
     temp_name: str
     description: str
@@ -114,6 +126,7 @@ class MonitoringTemplateUpdate(BaseModel):
     alerting_method: str
     monitoring_tools: List[str]
 
+# Pydantic model used for updating an existing monitoring tool
 class MonitoringToolUpdate(BaseModel):
     name: str
     version: str
@@ -123,18 +136,21 @@ class MonitoringToolUpdate(BaseModel):
     serv_name: str
     monitoring_templates: List[str]
 
+# Pydantic model used for updating an existing user
 class UserUpdate(BaseModel):
     username: str
     email: str
     role: str
     created_at: str
 
+# Pydantic model used for updating an existing server
 class ServerUpdate(BaseModel):
     hostname: str
     ip_address: str
     location: str
     owner_id: str
 
+# Pydantic model used for updating an existing server-template relationship
 class ServerRelationshipUpdate(BaseModel):
     server_id: str
     template_id: str
