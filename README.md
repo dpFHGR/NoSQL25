@@ -2,9 +2,9 @@
 Welcome to this GitHub page on building a Webstack to manage Monitoring Templates using MongoDB and FastAPI. This is part of the lecture NoSQL of the B.Sc. CDS study course at FHGR.
 
 # Use Case: Repository for Monitoring Templates
-The KSGR (Kantonsspital Graubünden) is in the process of setting up and expanding a monitoring solution on various platforms, such as "PRTG" and "Zabbix" (Monitoring tools). Various monitoring points/definitions are being created here and need to be centrally managed. This application serves as a repository to manage the monitoring templates across different tools. It also tracks which servers use which templates, providing better visibility into wwhich monitoring points are active on which systems.
+A Hospital is in the process of setting up and expanding a monitoring solution on various platforms, such as "PRTG" and "Zabbix" (Monitoring tools). Various monitoring points/definitions are being created here and need to be centrally managed. This application serves as a repository to manage the monitoring templates across different tools. It also tracks which servers use which templates, providing better visibility into wwhich monitoring points are active on which systems.
 
-The aim is to ensure that KSGR ICT employees have access to this repository so that they can assess the various existing monitoring points for their purposes.
+The aim is to ensure that the ICT employees of this hospital have access to this repository so that they can assess the various existing monitoring points for their purposes.
 
 ## Setup
 Before you get started, please download Docker Desktop on your system:
