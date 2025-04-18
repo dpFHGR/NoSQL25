@@ -1,22 +1,22 @@
-# Management of Monitoring Templates using a MongoDB and FastAPI in Python
+# Management of Monitoring Templates using a MongoDB database and FastAPI in Python
 Welcome to this GitHub page on building a Webstack to manage Monitoring Templates using MongoDB and FastAPI. This is part of the lecture NoSQL of the B.Sc. CDS study course at FHGR.
 
 # Use Case: Repository for Monitoring Templates
-The KSGR (Kantonsspital Graubünden) is in the process of setting up and expanding a monitoring solution on various platforms like "PRTG" and "Zabbix" (Monitoring tools). Various monitoring points/definitions are being created here and need to be centrally managed. This application serves as a repository to manage the monitoring templates across different tools. It also tracks which servers use which templates, allowing better visibility into wwhich monitoring points are active on which systems.
+The KSGR (Kantonsspital Graubünden) is in the process of setting up and expanding a monitoring solution on various platforms, such as "PRTG" and "Zabbix" (Monitoring tools). Various monitoring points/definitions are being created here and need to be centrally managed. This application serves as a repository to manage the monitoring templates across different tools. It also tracks which servers use which templates, providing better visibility into wwhich monitoring points are active on which systems.
 
-The aim is to ensure that KSGR ICT employees have access to this repository so that they can assess the various possibilities of the existing monitoring points for their purposes.
+The aim is to ensure that KSGR ICT employees have access to this repository so that they can assess the various existing monitoring points for their purposes.
 
 ## Setup
 Before you get started, please download Docker Desktop on your system:
 ```
 https://www.docker.com/
 ```
-Keep the Docker Desktop open for the upcoming docker-compose function to access the API.
+Keep the Docker Desktop open for the upcoming docker-compose functions to access the API.
 
 ##  Further Setup (on Pycharm/ Visual Studio code Terminal)
 There are 6 files uploaded in this repository: 3 Python files (main.py, routes.py, models.py), 1 environment file (.env), 1 Dockerfile and 1 docker-compose.yml file.
 - Open main.py, models.py, routes.py, .env, Dockerfile and docker-compose.yml files in Pycharm or Visual Studio code.
-- Open the terminal in your chosen IDE and you are ready to begin with the commands.
+- Open the terminal in your chosen IDE and you are ready to start.
 
 1. Clone the github link using the following command:
 ```
@@ -26,7 +26,7 @@ git clone https://github.com/dpFHGR/NoSQL25
 ```
 cd NoSQL25
 ```
-3. Build the docker images:
+3. Build the Docker images:
 ```
 docker compose build
 ```
@@ -34,7 +34,9 @@ docker compose build
 ```
 docker-compose up -d
 ```
-5. Then copy the given URL link below and paste it onto the address bar and press ENTER to access the API:
+5. Finally, copy the given URL below, paste it into the address bar, and press ENTER to access the API:
 ```
 http://localhost:8008/docs
 ```
+
+## How to use this API?
