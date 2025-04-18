@@ -1,8 +1,10 @@
+# Importing necessary libraries
 from fastapi import APIRouter, Body, Request, Response, HTTPException, status
 from fastapi.encoders import jsonable_encoder
 from typing import List
 from models import (MonitoringTemplate, MonitoringTemplateUpdate, MonitoringTool, MonitoringToolUpdate, User, UserUpdate, Server, ServerUpdate, ServerRelationship, ServerRelationshipUpdate)
 
+# Defining individual API routers for different resource groups
 template_router = APIRouter()
 tool_router = APIRouter()
 user_router = APIRouter()
@@ -10,6 +12,8 @@ server_router = APIRouter()
 ServerRelationship_router = APIRouter()
 
 # MonitoringTemplate Routes
+
+# Creating and storing a new monitoring template in the database using POST
 @template_router.post("/", response_description="Create a new monitoring template", status_code=status.HTTP_201_CREATED, response_model=MonitoringTemplate)
 def create_monitoring_template(request: Request, template: MonitoringTemplate = Body(...)):
     template = jsonable_encoder(template)
@@ -17,27 +21,20 @@ def create_monitoring_template(request: Request, template: MonitoringTemplate = 
     created_template = request.app.database["monitoring_templates"].find_one({"_id": new_template.inserted_id})
     return created_template
 
+# Retrieving a list of all monitoring templates using GET
 @template_router.get("/", response_description="List all monitoring templates", response_model=List[MonitoringTemplate])
 def list_monitoring_templates(request: Request):
     templates = list(request.app.database["monitoring_templates"].find(limit=100))
     return templates
 
+# Retrieving a single monitoring template by its ID, or return 404 if not found using GET
 @template_router.get("/{id}", response_description="Get a single monitoring template by id", response_model=MonitoringTemplate)
 def find_monitoring_template(id: str, request: Request):
     if (template := request.app.database["monitoring_templates"].find_one({"_id": id})) is not None:
         return template
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Monitoring template with ID {id} not found")
 
-# Search function
-@template_router.get("/search", response_description="Search templates", response_model=List[MonitoringTemplate])
-def search_templates(request: Request, limit: float = None, unit: str = None):
-    query = {}
-    if limit is not None:
-        query["limit"] = {limit}
-        if unit:
-            query["unit"] = unit
-        return list(request.app.database["monitoring_templates"].find(query))
-
+# Updating an existing monitoring template by ID using PUT; would return 404 if not found
 @template_router.put("/{id}", response_description="Update a monitoring template", response_model=MonitoringTemplate)
 def update_template(id: str, request: Request, template: MonitoringTemplateUpdate = Body(...)):
     template_data = {k: v for k, v in template.dict().items() if v is not None}
@@ -50,6 +47,7 @@ def update_template(id: str, request: Request, template: MonitoringTemplateUpdat
         return existing_template
 
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Monitoring template with ID {id} not found")
+
 
 @template_router.delete("/{id}", response_description="Delete a monitoring template")
 def delete_monitoring_template(id: str, request: Request, response: Response):
@@ -168,11 +166,6 @@ def link_template_to_server(request: Request, link: ServerRelationship = Body(..
     new_link = request.app.database["links"].insert_one(link)
     created_link = request.app.database["links"].find_one({"_id": new_link.inserted_id})
     return created_link
-
-@ServerRelationship_router.get("/", response_description="Get all links", response_model=List[ServerRelationship])
-def list_links(request: Request):
-    link = list(request.app.database["links"].find(limit=100))
-    return link
 
 @ServerRelationship_router.get("/server/{server_id}", response_description="Get templates linked to a server", response_model=List[ServerRelationship])
 def get_links_by_server_id(server_id: str, request: Request):
