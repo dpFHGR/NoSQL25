@@ -78,7 +78,7 @@ Idea: This API helps you to manage monitoring infrastructure by allowing users t
 - DELETE /template/{id} -> Remove a template.
 6. **Link Server to Monitoring Template:**
   Once you have a user, tool, and template, link them to a specific server.
-- POST /links -> Create a new link between a server and a monitoring template.
+- POST /link/ -> Create a new link between a server and a monitoring template.
   - Required fields: server_id, template_id, tool, and other optional metadata.
 - GET /link/server/{server_id} -> View all links associated with a given server.
 This effectively connects the server to a monitoring template via the selected tool.
@@ -210,6 +210,8 @@ mkdir .\mongo_dump
 ```
 docker cp mongodb:/data/db/dump .\mongo_dump
 ```
+6. To restore and import: ```https://dev.to/denisakp/backup-and-restore-mongodb-in-a-docker-environment-1ebb```
+
 ## Referrences
 1. https://www.youtube.com/watch?app=desktop&v=QkGqjPFIGCA&t=0s
 2. https://www.mongodb.com/resources/languages/pymongo-tutorial
