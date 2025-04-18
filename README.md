@@ -8,12 +8,12 @@ The aim is to ensure that the ICT employees of this hospital have access to this
 
 ## Methodology
 There are 6 files uploaded in this repository: 3 Python files (main.py, routes.py, models.py), 1 environment file (.env), 1 Dockerfile and 1 docker-compose.yml file.
--main.py: Intitializes the app and loads routers
--routes.py: Defines API endpoints
--models.py: Contains Pydantic models
--.env: Environment variables
--Dockerfile: Builds the FastAPI app image
--docker-compose.yml: Manages MongoDB and FastAPI services
+- main.py: Intitializes the app and loads routers
+- routes.py: Defines API endpoints
+- models.py: Contains Pydantic models
+- .env: Environment variables
+- Dockerfile: Builds the FastAPI app image
+- docker-compose.yml: Manages MongoDB and FastAPI services
 Along with the main branch, 2 side branches were used for development(feat_entities, search_function).
 
 Data Dumping:
