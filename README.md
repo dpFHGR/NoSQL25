@@ -25,7 +25,7 @@ Make sure Docker Desktop is running before proceeding.
 
 ##  Further Setup
 1. Open a terminal (command prompt/ git bash or any other).
-2. Navigate to your desired folder using "cd" (eg: cd Documents).
+2. Navigate to your desired folder using "cd" (e.g., cd Documents).
 3. With "dir" you can check contents of the Directory while navigating.
 4. Clone the repository using the following command:
 ```
@@ -48,7 +48,25 @@ http://localhost:8008/docs
 ```
 
 ## How to use this API?
-The idea is that, a User starts a Server, then the user is asked to select a monitoring tool (Zabbix/PRTG), the monitoring tool then creates a monitoring template
+Idea: This API helps you to manage monitoring infrastructure by allowing users to register servers, select monitoring tools (Zabbix/PRTG), create templates, and link them together.
+
+1. Create a User:
+Navigate to the POST /users endpoint and click on it.
+- Click on "Try it out" to open the interactive input form.
+- You can modify the default user data or leave it as it is.
+- Submit the request by clicking on "Execute" - a new user will be created with a unique ID (automatically generated)
+2. Verify the User:
+You can use the following endpoints to manage users:
+- GET /users -> List all users and confirm your new user has been created.
+- GET /users/{id} -> Update user data.
+- DELETE /users/{id} -> Delete a user.
+3. Choose or Create a Monitoring Tool:
+The Monitoring tools (e.g., Zabbix, PRTG) are predefined in the system, but you can also add new ones.
+- GET /tools -> View all available monitoring tools.
+- POST /tools -> Add a new tool, if needed.
+4. Create or Manage Monitoring Templates
+
+
 
 ## Data Dumping
 Finally, a data dump was performed to backup and restore the MongoDB database in a Docker container. The following was done:
