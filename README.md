@@ -64,4 +64,8 @@ mkdir .\mongo_dump
 ```
 docker cp mongodb:/data/db/dump .\mongo_dump
 ```
-###### Referrence: https://medium.com/@mustafaburakaydiin/how-to-backup-and-restore-a-mongodb-database-in-a-docker-container-a7242ba0994f
+## Referrence
+1. https://www.youtube.com/watch?app=desktop&v=QkGqjPFIGCA&t=0s
+2. https://www.mongodb.com/resources/languages/pymongo-tutorial
+3. https://fastapi.tiangolo.com/tutorial/query-params/#multiple-path-and-query-parameters
+4. https://medium.com/@mustafaburakaydiin/how-to-backup-and-restore-a-mongodb-database-in-a-docker-container-a7242ba0994f
