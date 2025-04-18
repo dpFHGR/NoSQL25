@@ -26,36 +26,15 @@ git clone https://github.com/dpFHGR/NoSQL25
 ```
 cd NoSQL25
 ```
-3. Create a Virtual Environment:
+3. Build the docker images:
 ```
-python -m venv venv
+docker compose build
 ```
-4. Activate the virtual environment you created:
-
-  On MacOS/Linux:
+4. Start the containers in detached mode:
 ```
-source venv/bin/activate
+docker-compose up -d
 ```
-  Or on Windows:
+5. Then copy the given URL link below and paste it onto the address bar and press ENTER to access the API:
 ```
-venv\Scripts\activate
+http://localhost:8008/docs
 ```
-5. Install Dependencies:
-```
-pip install -r requirements.txt
-```
-6. Start the MongoDB Database:
-   
-First, make sure you've got Docker installed on your system.
-
-Then check whether MongoDB is running locally or via Docker:
-```
-docker run -d -p 27017:27017 --name mongodb mongo
-```
-7. Run the FastAPI Application:
-```
-uvicorn main:app --reload
-```
-8. Access API Documentation:
-
-Once the app is running, click on the link to the browser from the terminal and add "/docs" to the end of the URL like this: "http://127.0.0.1:8000/docs" and press ENTER
