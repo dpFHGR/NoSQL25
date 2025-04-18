@@ -1,5 +1,5 @@
 # Management of Monitoring Templates using a MongoDB database and FastAPI in Python
-Welcome to this GitHub page on building a Webstack to manage Monitoring Templates using MongoDB and FastAPI. This is part of the lecture NoSQL of the B.Sc. CDS study course at FHGR. This pproject was completed on Windows 11 and all commands were run in Pycharm's terminal or Powershell.
+Welcome to this GitHub page on building a Webstack to manage Monitoring Templates using MongoDB and FastAPI. This is part of the lecture NoSQL of the B.Sc. CDS study course at FHGR. This project was completed on Windows 11 and all commands were run in Pycharm's terminal or Powershell.
 
 # Use Case: Repository for Monitoring Templates
 A Hospital is in the process of setting up and expanding a monitoring solution on various platforms, such as "PRTG" and "Zabbix" (Monitoring tools). Various monitoring points/definitions are being created here and need to be centrally managed. This application serves as a repository to manage the monitoring templates across different tools. It also tracks which servers use which templates, providing better visibility into which monitoring points are active on which systems.
@@ -48,7 +48,7 @@ http://localhost:8008/docs
 ```
 
 ## How to use this API?
-
+The idea is that, a User starts a Server, then the user is asked to select a monitoring tool (Zabbix/PRTG), the monitoring tool then creates a monitoring template
 
 ## Data Dumping
 Finally, a data dump was performed to backup and restore the MongoDB database in a Docker container. The following was done:
@@ -64,4 +64,4 @@ mkdir .\mongo_dump
 ```
 docker cp mongodb:/data/db/dump .\mongo_dump
 ```
-
+Referrence: https://medium.com/@mustafaburakaydiin/how-to-backup-and-restore-a-mongodb-database-in-a-docker-container-a7242ba0994f
