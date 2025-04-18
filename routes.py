@@ -1,7 +1,9 @@
 # Importing necessary libraries
-from fastapi import APIRouter, Body, Request, Response, HTTPException, status
+from urllib import request
+
+from fastapi import APIRouter, Body, Request, Response, HTTPException, status, Query
 from fastapi.encoders import jsonable_encoder
-from typing import List
+from typing import List, Optional
 from models import (MonitoringTemplate, MonitoringTemplateUpdate, MonitoringTool, MonitoringToolUpdate, User, UserUpdate, Server, ServerUpdate, ServerRelationship, ServerRelationshipUpdate)
 
 # Defining individual API routers for different resource groups
@@ -22,9 +24,32 @@ def create_monitoring_template(request: Request, template: MonitoringTemplate = 
     return created_template
 
 # Retrieving a list of all monitoring templates using GET
+    """
+    :param request: FastAPI request object
+    :param q: Declaration of query parameter. Optional - string or None. Allows metadata: title and description.
+    :return: searched templates
+    """
 @template_router.get("/", response_description="List all monitoring templates", response_model=List[MonitoringTemplate])
-def list_monitoring_templates(request: Request):
-    templates = list(request.app.database["monitoring_templates"].find(limit=100))
+def list_monitoring_templates(
+    request: Request,
+    q: Optional[str] = Query(
+        None,
+        title="Search",
+        description="Filter by temp_name (case-insensitive)."
+    ),
+):
+    # Access Collection from DB to run queries
+    db = request.app.database["monitoring_templates"]
+    if q:
+        # Filters case-insensitive
+        filter_ = {"temp_name": {"$regex": q, "$options": "i"}}
+    else:
+        # If empty query was supplied
+        filter_ = {}
+    # Executes the query on collection to fetch upto "limit"
+    templates = list(db.find(filter_, limit=100))
+
+    # Wrapped in list and returns list of all templates as JSON to client
     return templates
 
 # Retrieving a single monitoring template by its ID, or return 404 if not found using GET
@@ -70,9 +95,32 @@ def create_monitoring_tool(request: Request, tool: MonitoringTool = Body(...)):
     return created_tool
 
 # Retrieving a list of all monitoring tools using GET
+    """
+    :param request: FastAPI request object
+    :param q: Declaration of query parameter. Optional - string or None. Allows metadata: title and description.
+    :return: searched tools
+    """
 @tool_router.get("/", response_description="List all monitoring tools", response_model=List[MonitoringTool])
-def list_monitoring_tools(request: Request):
-    tools = list(request.app.database["monitoring_tools"].find(limit=100))
+def list_monitoring_tools(
+        request: Request,
+        q: Optional[str] = Query(
+            None,
+            title="Search",
+            description="Filter by name (case-insensitive)."
+        ),
+):
+    # Access Collection from DB to run queries
+    db = request.app.database["monitoring_tools"]
+    if q:
+        # Filters case-insensitive
+        filter_ = {"name": {"$regex": q, "$options": "i"}}
+    else:
+        # If empty query was supplied
+        filter_ = {}
+    # Executes the query on collection to fetch upto "limit"
+    tools = list(db.find(filter_, limit=100))
+
+    # Wrapped in list and returns list of all tools as JSON to client
     return tools
 
 # Retrieving a single monitoring tool by its ID, or return 404 if not found using GET
@@ -118,10 +166,33 @@ def create_user(request: Request, user: User = Body(...)):
     return created_user
 
 # Retrieving a list of all users using GET
+    """
+    :param request: FastAPI request object
+    :param q: Declaration of query parameter. Optional - string or None. Allows metadata: title and description.
+    :return: searched user
+    """
 @user_router.get("/", response_description="List all users", response_model=List[User])
-def list_users(request: Request):
-    user = list(request.app.database["users"].find(limit=100))
-    return user
+def list_users(
+        request: Request,
+        q: Optional[str] = Query(
+            None,
+            title="Search",
+            description="Filter by username (case-insensitive)."
+        ),
+):
+    # Access Collection from DB to run queries
+    db = request.app.database["users"]
+    if q:
+        # Filters case-insensitive
+        filter_ = {"username": {"$regex": q, "$options": "i"}}
+    else:
+        # If empty query was supplied
+        filter_ = {}
+    # Executes the query on collection to fetch upto "limit"
+    users = list(db.find(filter_, limit=100))
+
+    # Wrapped in list and returns list of all users as JSON to client
+    return users
 
 # Retrieving a single user by its ID, or return 404 if not found using GET
 @user_router.get("/{id}", response_description="Get a single user", response_model=User)
@@ -166,10 +237,33 @@ def create_server(request: Request, server: Server = Body(...)):
     return created_server
 
 # # Retrieving a list of all servers using GET
+    """
+    :param request: FastAPI request object
+    :param q: Declaration of query parameter. Optional - string or None. Allows metadata: title and description.
+    :return: searched servers
+    """
 @server_router.get("/", response_description="List all servers", response_model=List[Server])
-def list_servers(request: Request):
-    server = list(request.app.database["servers"].find(limit=100))
-    return server
+def list_servers(
+        request: Request,
+        q: Optional[str] = Query(
+            None,
+            title="Search",
+            description="Filter by hostname (case-insensitive)."
+        ),
+):
+    # Access Collection from DB to run queries
+    db = request.app.database["servers"]
+    if q:
+        # Filters case-insensitive
+        filter_ = {"hostname": {"$regex": q, "$options": "i"}}
+    else:
+        # If empty query was supplied
+        filter_ = {}
+    # Executes the query on collection to fetch upto "limit"
+    servers = list(db.find(filter_, limit=100))
+
+    # Wrapped in list and returns list of all templates as JSON to client
+    return servers
 
 # Retrieving a single server by its ID, or return 404 if not found using GET
 @server_router.get("/{id}", response_description="Get a single server or list all", response_model=Server)
