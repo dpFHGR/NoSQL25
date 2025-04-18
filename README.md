@@ -50,23 +50,151 @@ http://localhost:8008/docs
 ## How to use this API?
 Idea: This API helps you to manage monitoring infrastructure by allowing users to register servers, select monitoring tools (Zabbix/PRTG), create templates, and link them together.
 
-1. Create a User:
-Navigate to the POST /users endpoint and click on it.
+1. **Create a User:**
+   Navigate to the POST /users endpoint and click on it.
 - Click on "Try it out" to open the interactive input form.
 - You can modify the default user data or leave it as it is.
 - Submit the request by clicking on "Execute" - a new user will be created with a unique ID (automatically generated)
-2. Verify the User:
-You can use the following endpoints to manage users:
-- GET /users -> List all users and confirm your new user has been created.
-- GET /users/{id} -> Update user data.
-- DELETE /users/{id} -> Delete a user.
-3. Choose or Create a Monitoring Tool:
-The Monitoring tools (e.g., Zabbix, PRTG) are predefined in the system, but you can also add new ones.
-- GET /tools -> View all available monitoring tools.
-- POST /tools -> Add a new tool, if needed.
-4. Create or Manage Monitoring Templates
+2. **Verify the User:**
+  You can use the following endpoints to manage users:
+- GET /user/ -> List all users and confirm your new user has been created.
+- GET /user/{id} -> Update user data.
+- DELETE /user/{id} -> Delete a user.
+3. **Choose or Create a Server:**
+  Before linking templates, make sure a server exists.
+- POST /server/ -> Create a new server.
+- GET /server/ -> View all existing servers.
+- GET /server/{id} -> Retrieve a specific server by ID.
+4. **Choose or Create a Monitoring Tool:**
+  The Monitoring tools (e.g., Zabbix, PRTG) are predefined in the system, but you can also add new ones.
+- GET /tool/ -> View all available monitoring tools.
+- POST /tool/ -> Add a new tool, if needed.
+5. **Create or Manage Monitoring Templates:**
+  Monitoring templates define what to monitor (e.g., CPU usage, disk space).
+- POST /template/ -> Create a new template.
+- GET /template/ -> List all templates.
+- GET /template/{id} -> Find a specific template by ID.
+- PUT /template/{id} -> Update a template.
+- DELETE /template/{id} -> Remove a template.
+6. **Link Server to Monitoring Template:**
+  Once you have a user, tool, and template, link them to a specific server.
+- POST /links -> Create a new link between a server and a monitoring template.
+  - Required fields: server_id, template_id, tool, and other optional metadata.
+- GET /link/server/{server_id} -> View all links associated with a given server.
+This effectively connects the server to a monitoring template via the selected tool.
 
+## CURL Commands
+After building and running docker compose, instead of accessing the API itself we can run the same test scenario using CURL commands. Since this project was done on Windows and Powershell, Invoke-RestMethod was used instead of CURL. The following is the pipeline:
 
+1. Create a user:
+```
+$user = Invoke-RestMethod `
+  -Uri "http://localhost:8008/user/" `
+  -Method Post `
+  -ContentType "application/json" `
+  -Body (@{
+    username   = "Lara"
+    email      = "Lara@example.com"
+    role       = "Admin"
+    created_at = "2025-04-18 10:00:00"
+  } | ConvertTo-Json)
+```
+3. View created user and copy ID
+```
+$userId = $user._id
+Write-Host "User ID is $userId"
+```
+
+5. Create Server
+```
+$server = Invoke-RestMethod `
+  -Uri "http://localhost:8008/server/" `
+  -Method Post `
+  -ContentType "application/json" `
+  -Body (@{
+    hostname   = "db00"
+    ip_address = "0.0.0.0"
+    location   = "ICT-A"
+    owner_id   = $userId
+  } | ConvertTo-Json)
+$serverId = $server._id
+Write-Host "Server ID is $serverId"
+```
+
+7. Create Monitoring tool
+```
+$tool = Invoke-RestMethod `
+  -Uri "http://localhost:8008/tool/" `
+  -Method Post `
+  -ContentType "application/json" `
+  -Body (@{
+    name                 = "Zabbix"
+    version              = "6.0"
+    platform             = "Linux"
+    manufacturer         = "Zabbix LLC"
+    sys_owner            = "IT Admin"
+    serv_name            = "Monitoring-Server-1"
+    monitoring_templates = @()
+  } | ConvertTo-Json)
+$toolId = $tool._id
+Write-Host "Tool ID is $toolId"
+```
+
+9. Create Monitoring template
+```
+$template = Invoke-RestMethod `
+  -Uri "http://localhost:8008/template/" `
+  -Method Post `
+  -ContentType "application/json" `
+  -Body (@{
+    temp_name        = "CPU Load Check"
+    description      = "Alert if CPU > 80% for 5 min"
+    limit            = 80.0
+    unit             = "%"
+    time_window      = "5m"
+    alerting_method  = "email"
+    monitoring_tools = @($toolId)
+  } | ConvertTo-Json)
+$templateId = $template._id
+Write-Host "Template ID is $templateId"
+```
+
+10. Create Relationship between template and Server
+```
+$link = Invoke-RestMethod `
+  -Uri "http://localhost:8008/link/" `
+  -Method Post `
+  -ContentType "application/json" `
+  -Body (@{
+    server_id   = $serverId
+    template_id = $templateId
+    tool        = $toolId
+    applied_on  = "2025-04-18 12:00:00"
+  } | ConvertTo-Json)
+Write-Host "Link created."
+```
+
+11. Verification listing relationships for the Server
+```
+Invoke-RestMethod `
+  -Uri "http://localhost:8008/link/server/$serverId" `
+  -Method Get
+```
+
+12. Verification of all entities
+```
+Invoke-RestMethod -Uri "http://localhost:8008/user/"     -Method Get
+Invoke-RestMethod -Uri "http://localhost:8008/server/"   -Method Get
+Invoke-RestMethod -Uri "http://localhost:8008/tool/"     -Method Get
+Invoke-RestMethod -Uri "http://localhost:8008/template/" -Method Get
+```
+
+13. Search function for templates case insensitive
+```
+Invoke-RestMethod `
+  -Uri "http://localhost:8008/template/?q=cPu" `
+  -Method Get
+```
 
 ## Data Dumping
 Finally, a data dump was performed to backup and restore the MongoDB database in a Docker container. The following was done:
@@ -82,7 +210,7 @@ mkdir .\mongo_dump
 ```
 docker cp mongodb:/data/db/dump .\mongo_dump
 ```
-## Referrence
+## Referrences
 1. https://www.youtube.com/watch?app=desktop&v=QkGqjPFIGCA&t=0s
 2. https://www.mongodb.com/resources/languages/pymongo-tutorial
 3. https://fastapi.tiangolo.com/tutorial/query-params/#multiple-path-and-query-parameters
